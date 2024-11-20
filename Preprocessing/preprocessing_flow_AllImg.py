@@ -76,7 +76,7 @@ def select_folder():
     return folder_path
 
 if __name__ == "__main__":
-    reference_image_path = os.path.abspath('../paciente_pre_procesado/UPENN-GBM-00001_11_T1GD.nii')
+    reference_image_path = os.path.abspath('../DataBase/Preprocessed_Subjects/UPENN-GBM-00001_11_T1GD.nii')
 
     if not os.path.isfile(reference_image_path):
         print(f"Error: El archivo de referencia no se encuentra en {reference_image_path}")
