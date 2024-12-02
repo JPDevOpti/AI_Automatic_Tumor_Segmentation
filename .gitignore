@@ -166,3 +166,4 @@ cython_debug/
 
 # dataset folder
 dataset/
+DataBase
