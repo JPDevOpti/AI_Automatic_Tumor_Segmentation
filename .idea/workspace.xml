@@ -4,42 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a18af915-ce74-4573-bf00-2e5d82908d32" name="Changes" comment="Reorganized folders">
-      <change afterPath="$PROJECT_DIR$/Preprocessing/Automatic_Preprocessing_sRMI.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Preprocessing/DataSet_Preprocessing_sRMI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataBase/No_Preprocessed_Subject/UPENN-GBM-00096_11_FLAIR_unstripped.nii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataBase/No_Preprocessed_Subject/UPENN-GBM-00096_11_T1GD_unstripped.nii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataBase/No_Preprocessed_Subject/UPENN-GBM-00096_11_T1_unstripped.nii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataBase/No_Preprocessed_Subject/UPENN-GBM-00096_11_T2_unstripped.nii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataBase/Preprocessed_Subjects/UPENN-GBM-00001_11_FLAIR.nii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataBase/Preprocessed_Subjects/UPENN-GBM-00001_11_T1.nii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataBase/Preprocessed_Subjects/UPENN-GBM-00001_11_T1GD.nii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataBase/Preprocessed_Subjects/UPENN-GBM-00001_11_T2.nii" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/Scripts/Data_analysis.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/Scripts/brain_extraction.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/Scripts/co_registration.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/Scripts/filter.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/Scripts/normalization.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/Scripts/utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/experimental/Flujo_preprocesamiento.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/experimental/test.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/metadata/UPENN-GBM_List.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/metadata/UPENN-GBM_acquisition.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/metadata/UPENN-GBM_filtered.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/preprocessing_flow.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/preprocessing_flow.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/preprocessing_flow_AllImg.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Preprocessing/see_results.ipynb" beforeDir="false" />
-    </list>
+    <list default="true" id="a18af915-ce74-4573-bf00-2e5d82908d32" name="Changes" comment="Reorganized folders" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jupyter Notebook" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Preprocessing_2" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -52,14 +33,18 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/JPDevOpti/AI_Automatic_Tumor_Segmentation.git&quot;,
-    &quot;accountId&quot;: &quot;1fc0ecdd-ebf3-4ea6-81a7-1745ec10db4a&quot;
+    &quot;url&quot;: &quot;git@github.com:JPDevOpti/AI_Automatic_Tumor_Segmentation.git&quot;,
+    &quot;accountId&quot;: &quot;e1ad65f1-0abd-4f24-aee5-5c03da67bad1&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="2p7SWiOlBQ2IhcyIcfeHw5iE3J8" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="2" id="Remove" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -72,7 +57,9 @@
     "Python.Extract_T1GD_3T.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Preprocessing__2",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "feat/res-net",
+    "last_opened_file_path": "/Users/imeag/Documents/udea/pis3/AI_Automatic_Tumor_Segmentation",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -80,6 +67,13 @@
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "GitStage.ChangesTree.GroupingKeys": [
+      "directory",
+      "module",
+      "repository"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -93,8 +87,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-PY-243.21565.199" />
-        <option value="bundled-python-sdk-cab1f2013843-4ae2d6a61b08-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.21565.199" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23726.102" />
+        <option value="bundled-python-sdk-5e1850174b45-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23726.102" />
       </set>
     </attachedChunks>
   </component>
@@ -112,6 +106,7 @@
       <workItem from="1732117733554" duration="27000" />
       <workItem from="1732117782497" duration="351000" />
       <workItem from="1732118157631" duration="19912000" />
+      <workItem from="1733187902049" duration="5714000" />
     </task>
     <task id="LOCAL-00001" summary="Reorganized folders">
       <option name="closed" value="true" />

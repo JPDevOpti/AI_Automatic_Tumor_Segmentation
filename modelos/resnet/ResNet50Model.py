@@ -32,7 +32,7 @@ def projection_block(x, filters, strides):
     return x
 
 #Res-Net50 desing
-def ResNet50(input_shape=(224, 224, 3), num_classes=4):
+def res_net_50(input_shape=(224, 224, 3), num_classes=4):
     inputs = Input(shape=input_shape)
     
     # initial conv layer
