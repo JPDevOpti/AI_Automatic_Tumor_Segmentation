@@ -1,13 +1,16 @@
-from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, Activation, MaxPooling2D, Dense, GlobalAveragePooling2D, Add, Flatten
+from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, Activation, MaxPooling2D, Dense, \
+    GlobalAveragePooling2D, Add, Flatten, Dropout
 from tensorflow.keras import Model
 
-#Basic elements for the ResNet
+
+# Basic elements for the ResNet
 
 def conv_block(x, filters, kernel_size, strides, padding='same'):
     x = Conv2D(filters=filters, kernel_size=kernel_size, strides=strides, padding=padding)(x)
     x = BatchNormalization()(x)
     x = Activation('relu')(x)
     return x
+
 
 def identity_block(x, filters):
     shortcut = x
@@ -18,6 +21,7 @@ def identity_block(x, filters):
     x = Add()([x, shortcut])
     x = Activation('relu')(x)
     return x
+
 
 def projection_block(x, filters, strides):
     shortcut = x
@@ -31,12 +35,13 @@ def projection_block(x, filters, strides):
     x = Activation('relu')(x)
     return x
 
-#Res-Net50 desing
+
+# Res-Net50 desing
 def res_net_50(input_shape=(224, 224, 3), num_classes=4):
     inputs = Input(shape=input_shape)
-    
+
     # initial conv layer
-    x = conv_block(inputs, filters=64, kernel_size=(7, 7), strides=(2, 2), padding='')
+    x = conv_block(inputs, filters=64, kernel_size=(7, 7), strides=(2, 2), padding='same')
     x = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding='same')(x)
 
     # conv block 1
@@ -64,8 +69,9 @@ def res_net_50(input_shape=(224, 224, 3), num_classes=4):
     x = identity_block(x, filters=512)
 
     # Flatten, global average pooling and dense layer
-    x = GlobalAveragePooling2D()(x) 
+    x = GlobalAveragePooling2D()(x)
     x = Flatten()(x)
+    x = Dropout(0.3)(x)  # Add dropout layer with 30% rate
     outputs = Dense(num_classes, activation='softmax')(x)
 
     model = Model(inputs=inputs, outputs=outputs)

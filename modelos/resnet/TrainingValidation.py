@@ -1,3 +1,5 @@
+import os
+import nibabel as nib
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -6,6 +8,9 @@ from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.utils import to_categorical
 from ResNet50Model import res_net_50
 
+NUM_CLASSES = 4
+EPOCHS = 35
+BATCH_SIZE = 16
 
 # Definition of Dice's coefficient metric
 def dice_coefficient(y_true, y_pred, smooth=1e-6):
@@ -24,7 +29,7 @@ Y = to_categorical(Y, num_classes=2)  # One-hot encoding for 2 classes
 X_train, X_val, Y_train, Y_val = train_test_split(X, Y, test_size=0.2, random_state=42)
 
 # Create res_net_50 model
-model = res_net_50(input_shape=(224, 224, 3), num_classes=1000)
+model = res_net_50(input_shape=(224, 224, 3), num_classes=NUM_CLASSES)
 model.compile(optimizer=SGD(learning_rate=0.000062), loss='categorical_crossentropy',
               metrics=['accuracy'])  # Editar los hiperparámetros con los propuestos en el artículo
 
@@ -35,8 +40,8 @@ early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weig
 history = model.fit(
     X_train, Y_train,
     validation_data=(X_val, Y_val),
-    epochs=20,
-    batch_size=32,
+    epochs=EPOCHS,
+    batch_size=BATCH_SIZE,
     callbacks=[early_stopping]
 )
 
