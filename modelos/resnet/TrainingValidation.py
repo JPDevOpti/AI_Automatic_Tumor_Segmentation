@@ -7,6 +7,7 @@ from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.utils import to_categorical
 from ResNet50Model import res_net_50
+from ResNet50Model2 import res_unet
 
 NUM_CLASSES = 4
 EPOCHS = 35
@@ -22,14 +23,18 @@ def dice_coefficient(y_true, y_pred, smooth=1e-6):
 
 # Simulate data
 X = np.random.rand(1000, 224, 224, 3)  # Replace with preprocessed images
-Y = np.random.randint(0, 2, 1000)  # Binary labels (0 or 1)
-Y = to_categorical(Y, num_classes=2)  # One-hot encoding for 2 classes
+#simulate segmentation masks
+Y = np.random.randint(0, NUM_CLASSES, 1000)  # Simulate labels
+print(Y)
+Y = to_categorical(Y, num_classes=NUM_CLASSES)  # One-hot encoding
+print(Y)
+
 
 # Split data into training and validation sets
 X_train, X_val, Y_train, Y_val = train_test_split(X, Y, test_size=0.2, random_state=42)
 
-# Create res_net_50 model
-model = res_net_50(input_shape=(224, 224, 3), num_classes=NUM_CLASSES)
+# Create res_unet model
+model = res_unet(input_shape=(224, 224, 3), num_classes=NUM_CLASSES)
 model.compile(optimizer=SGD(learning_rate=0.000062), loss='categorical_crossentropy',
               metrics=['accuracy'])  # Editar los hiperparámetros con los propuestos en el artículo
 
