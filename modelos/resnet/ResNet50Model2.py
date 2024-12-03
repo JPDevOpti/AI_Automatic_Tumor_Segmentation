@@ -1,7 +1,6 @@
-from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, Activation, MaxPooling2D, Dense, GlobalAveragePooling2D, Add, Flatten
-from tensorflow.keras import Model
-
-#Basic elements for the ResNet
+import tensorflow as tf
+from tensorflow.keras.layers import Conv2D, BatchNormalization, Activation, MaxPooling2D, Conv2DTranspose, Concatenate, Input, Add
+from tensorflow.keras.models import Model
 
 def conv_block(x, filters, kernel_size, strides, padding='same'):
     x = Conv2D(filters=filters, kernel_size=kernel_size, strides=strides, padding=padding)(x)
@@ -31,42 +30,48 @@ def projection_block(x, filters, strides):
     x = Activation('relu')(x)
     return x
 
-#Res-Net50 desing
-def ResNet50(input_shape=(224, 224, 3), num_classes=4):
+def res_net_50_encoder(input_shape=(224, 224, 3)):
     inputs = Input(shape=input_shape)
-    
-    # initial conv layer
-    x = conv_block(inputs, filters=64, kernel_size=(7, 7), strides=(2, 2), padding='')
+    x = conv_block(inputs, filters=64, kernel_size=(7, 7), strides=(2, 2), padding='same')
     x = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding='same')(x)
-
-    # conv block 1
     x = projection_block(x, filters=64, strides=(1, 1))
     x = identity_block(x, filters=64)
     x = identity_block(x, filters=64)
-
-    # conv block 2
     x = projection_block(x, filters=128, strides=(2, 2))
     x = identity_block(x, filters=128)
     x = identity_block(x, filters=128)
     x = identity_block(x, filters=128)
-
-    # conv block 3
     x = projection_block(x, filters=256, strides=(2, 2))
     x = identity_block(x, filters=256)
     x = identity_block(x, filters=256)
     x = identity_block(x, filters=256)
     x = identity_block(x, filters=256)
     x = identity_block(x, filters=256)
-
-    # conv block 4
     x = projection_block(x, filters=512, strides=(2, 2))
     x = identity_block(x, filters=512)
     x = identity_block(x, filters=512)
+    return Model(inputs, x)
 
-    # Flatten, global average pooling and dense layer
-    x = GlobalAveragePooling2D()(x) 
-    x = Flatten()(x)
-    outputs = Dense(num_classes, activation='softmax')(x)
+def decoder_block(x, skip, filters):
+    x = Conv2DTranspose(filters, (2, 2), strides=(2, 2), padding='same')(x)
+    x = Concatenate()([x, skip])
+    x = conv_block(x, filters, (3, 3), (1, 1))
+    x = conv_block(x, filters, (3, 3), (1, 1))
+    return x
 
-    model = Model(inputs=inputs, outputs=outputs)
-    return model
+def res_unet(input_shape=(224, 224, 3), num_classes=4):
+    encoder = res_net_50_encoder(input_shape)
+    encoder.summary()
+    inputs = encoder.input
+    skips = [encoder.get_layer(name).output for name in ['conv2d_2', 'conv2d_15', 'conv2d_34']]
+    x = encoder.output
+    x = decoder_block(x, skips[2], 256)
+    x = decoder_block(x, skips[1], 128)
+    x = decoder_block(x, skips[0], 64)
+    x = Conv2DTranspose(64, (2, 2), strides=(2, 2), padding='same')(x)
+    x = conv_block(x, 64, (3, 3), (1, 1))
+    x = Conv2D(num_classes, (1, 1), activation='softmax')(x)
+    return Model(inputs, x)
+
+model = res_unet(input_shape=(224, 224, 3), num_classes=4)
+model.summary()
