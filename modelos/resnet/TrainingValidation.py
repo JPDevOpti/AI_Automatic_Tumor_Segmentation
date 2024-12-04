@@ -1,5 +1,4 @@
 import os
-import nibabel as nib
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -10,7 +9,7 @@ from ResNet50Model import res_net_50
 from ResNet50Model2 import res_unet
 
 NUM_CLASSES = 4
-EPOCHS = 35
+EPOCHS = 5
 BATCH_SIZE = 16
 
 # Definition of Dice's coefficient metric
