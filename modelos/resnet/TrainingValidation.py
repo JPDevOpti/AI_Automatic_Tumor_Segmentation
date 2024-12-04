@@ -2,15 +2,21 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+import tensorflow as tf
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.utils import to_categorical
 from ResNet50Model import res_net_50
 from ResNet50Model2 import res_unet
+import nibabel as nib
 
 NUM_CLASSES = 4
-EPOCHS = 5
+EPOCHS = 2
 BATCH_SIZE = 16
+
+# Define input directories
+input_images_dir = '../../DataBase/DataSet_Preprocessed_RGB_clear/'
+input_masks_dir = '../../DataBase/MASK_RESIZED/'
 
 # Definition of Dice's coefficient metric
 def dice_coefficient(y_true, y_pred, smooth=1e-6):
@@ -20,20 +26,69 @@ def dice_coefficient(y_true, y_pred, smooth=1e-6):
     return (2. * intersection + smooth) / (np.sum(y_true_f) + np.sum(y_pred_f) + smooth)
 
 
-# Simulate data
-X = np.random.rand(1000, 224, 224, 3)  # Replace with preprocessed images
-#simulate segmentation masks
-Y = np.random.randint(0, NUM_CLASSES, 1000)  # Simulate labels
-print(Y)
-Y = to_categorical(Y, num_classes=NUM_CLASSES)  # One-hot encoding
-print(Y)
+# Function to load and preprocess images from NIfTI files (no conversion to RGB)
+def load_image(image_path):
+    img = nib.load(image_path)  # Load NIfTI file
+    img_data = img.get_fdata()  # Get image data
+    return img_data
 
+# Function to load and preprocess segmentation masks from NIfTI files (without resizing)
+def load_and_preprocess_mask(mask_path):
+    mask = nib.load(mask_path)  # Load NIfTI file
+    mask_data = mask.get_fdata()  # Get mask data
+    # Convert mask values to one-hot encoding
+    mask_one_hot = np.array([to_categorical(mask_data[:, :, i], num_classes=NUM_CLASSES) for i in range(mask_data.shape[2])])
+    return mask_one_hot
 
-# Split data into training and validation sets
+# Load images and masks into arrays
+image_files = [f for f in os.listdir(input_images_dir) if f.endswith('.nii.gz')]
+mask_files = [f for f in os.listdir(input_masks_dir) if f.endswith('.nii.gz')]
+
+# Ensure that image and mask files correspond
+image_files.sort()
+mask_files.sort()
+
+# Define the range of images to load (e.g., from index 10 to index 30)
+start_idx = 10
+end_idx = 20
+
+# Select only the files within the specified range
+selected_image_files = image_files[start_idx:end_idx]
+selected_mask_files = mask_files[start_idx:end_idx]
+
+# Initialize lists to hold image and mask data
+X = []
+Y = []
+
+# Load and preprocess all images and masks
+for img_file, mask_file in zip(image_files, mask_files):
+    img_path = os.path.join(input_images_dir, img_file)
+    mask_path = os.path.join(input_masks_dir, mask_file)
+    
+    # Load the image and mask
+    image_data = load_image(img_path)  # No need to convert to RGB since they're already in that format
+    mask_data = load_and_preprocess_mask(mask_path)
+    
+    # Append to the lists
+    X.append(image_data)
+    Y.append(mask_data)
+
+# Convert lists to numpy arrays
+X = np.array(X)
+Y = np.array(Y)
+
+# Split data into training and validation sets (80% train, 20% validation)
 X_train, X_val, Y_train, Y_val = train_test_split(X, Y, test_size=0.2, random_state=42)
 
+# Verifica las formas de los datos
+print(f"X_train shape: {X_train.shape}")
+print(f"Y_train shape: {Y_train.shape}")
+print(f"X_val shape: {X_val.shape}")
+print(f"Y_val shape: {Y_val.shape}")
+
 # Create res_unet model
-model = res_unet(input_shape=(224, 224, 3), num_classes=NUM_CLASSES)
+skip_layers = ["conv2d_62", "conv2d_83", "conv2d_92"]  
+model = res_unet(input_shape=(224, 224, 3), num_classes=NUM_CLASSES, skip_layer_names=skip_layers)
 model.compile(optimizer=SGD(learning_rate=0.000062), loss='categorical_crossentropy',
               metrics=['accuracy'])  # Editar los hiperparámetros con los propuestos en el artículo
 
